@@ -10,11 +10,11 @@
 #   shell: /tmp/install-docker.sh
 
 - name: Setup masters
-  include_tasks: master.yaml
+  include_tasks: master.yml
   when: inventory_hostname in groups[master_group]
 
 - name: Setup Workers
-  include_tasks: worker.yaml
+  include_tasks: worker.yml
   when: inventory_hostname in groups[worker_group]
 
 ## k3s 配置 containerd 登录 private registry
