@@ -10,6 +10,7 @@
   command: k3sup join \
     --ip {{ ansible_host }} \
     --server-ip {{ hostvars[groups[master_group][0]]['ansible_host'] }} \
+    --k3s-version "{{ k3s_version}}" \
     --ssh-key {{ ansible_ssh_private_key_file }} \
     --user "{{ ansible_user }}"
   register: worker_created
