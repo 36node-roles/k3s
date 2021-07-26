@@ -30,7 +30,7 @@
     --context {{ k8s_cluster_name }} \
     --local-path ~/.kube/config.{{ k8s_cluster_name }} \
     --k3s-version "{{ k3s_version}}" \
-    --k3s-extra-args '--tls-san {{ k8s_lb }} --node-label svccontroller.k3s.cattle.io/enablelb=true --disable traefik' \
+    --k3s-extra-args '--tls-san {{ k8s_lb }} --node-label svccontroller.k3s.cattle.io/enablelb=true' \
     --ssh-key {{ ansible_ssh_private_key_file }} \
     --cluster
   when: inventory_hostname == groups[master_group][0] and k8s_api_result.status == -1
@@ -78,7 +78,7 @@
     --server-user "{{ ansible_user }}" \
     --server-ip {{ hostvars[groups[master_group][0]]['ansible_host'] }} \
     --k3s-version "{{ k3s_version}}" \
-    --k3s-extra-args '--tls-san {{ k8s_lb }} --node-label svccontroller.k3s.cattle.io/enablelb=true --disable traefik' \
+    --k3s-extra-args '--tls-san {{ k8s_lb }} --node-label svccontroller.k3s.cattle.io/enablelb=true' \
     --ssh-key {{ ansible_ssh_private_key_file }} \
     --server
   when: inventory_hostname != groups[master_group][0] and k8s_api_result.status == -1
