@@ -2,6 +2,8 @@
 master_group: masters
 worker_group: workers
 
+force_install: false
+
 k8s_cluster_name: myk3s
 k8s_lb: 192.168.102.100
 

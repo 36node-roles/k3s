@@ -33,7 +33,7 @@
     --k3s-extra-args '--tls-san {{ k8s_lb }} --node-label svccontroller.k3s.cattle.io/enablelb=true' \
     --ssh-key {{ ansible_ssh_private_key_file }} \
     --cluster
-  when: inventory_hostname == groups[master_group][0] and k8s_api_result.status == -1
+  when: inventory_hostname == groups[master_group][0] and (k8s_api_result.status == -1 or force_install)
   register: first_master_created
   delegate_to: localhost
 
@@ -81,7 +81,7 @@
     --k3s-extra-args '--tls-san {{ k8s_lb }} --node-label svccontroller.k3s.cattle.io/enablelb=true' \
     --ssh-key {{ ansible_ssh_private_key_file }} \
     --server
-  when: inventory_hostname != groups[master_group][0] and k8s_api_result.status == -1
+  when: inventory_hostname != groups[master_group][0] and (k8s_api_result.status == -1 or force_install)
   register: master_created
   delegate_to: localhost
 
