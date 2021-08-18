@@ -15,4 +15,4 @@
     --user "{{ ansible_user }}"
   register: worker_created
   delegate_to: localhost
-  when: check_result.rc == 1 or force_install
+  when: check_result.rc == 1

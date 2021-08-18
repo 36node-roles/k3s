@@ -2,8 +2,6 @@
 
 在 master 和 worker 节点安装 k3s
 
-# 其他
-
 ansible 安装 k3s 集群, 利用 k3sup 进行简便安装
 
 ## 准备控制机
@@ -78,6 +76,24 @@ https://rancher.com/docs/k3s/latest/en/installation/private-registry/
 kubectl explain cronjob
 ```
 
+查看所有 api version
+```
+kubectl api-resources
+```
+
+污点
+```
+kubectl taint nodes master-11 node-role.kubernetes.io/master:NoSchedule
+```
+
+查看 node labels
+```
+kubectl get nodes --show-labels
+```
+
+# 查看某一node上的所有pods
+kubectl get pods --all-namespaces -o wide --field-selector spec.nodeName=master-11
+
 ## 错误解决
 
 1. invalid capacity 0 on image filesystem
@@ -90,9 +106,18 @@ https://github.com/ubuntu/microk8s/issues/401#issuecomment-480945986
 k3sup install --skip-install \
     --ip "{{ k8s_lb }}" \
     --user "{{ ansible_user }}" \
-    --context {{ k8s_cluster_name }} \
-    --local-path ~/.kube/config.{{ k8s_cluster_name }} \
+    --context {{ cluster_name }} \
+    --local-path ~/.kube/config.{{ cluster_name }} \
     --k3s-extra-args '--tls-san {{ k8s_lb }} --node-label svccontroller.k3s.cattle.io/enablelb=true' \
     --ssh-key {{ ansible_private_key_file }} \
     --cluster
+```
+
+## Develop guide
+
+Link to local installed role for convenience.
+
+```
+rm -rf /Users/zzs/.ansible/roles/36node.k3s
+ln -s $PWD /Users/zzs/.ansible/roles/36node.k3s
 ```

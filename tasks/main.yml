@@ -9,6 +9,9 @@
 # - name: Install docker
 #   shell: /tmp/install-docker.sh
 
+- name: Prepare all nodes
+  include_tasks: prepare.yml
+
 - name: Setup masters
   include_tasks: master.yml
   when: inventory_hostname in groups[master_group]
@@ -40,7 +43,7 @@
     daemon_reload: yes
     state: restarted
     enabled: yes
-  when: (registry_result is changed or force_install) and inventory_hostname in groups[master_group]
+  when: (registry_result is changed) and inventory_hostname in groups[master_group]
 
 - name: Restart k3s-agent service
   become: yes
@@ -49,11 +52,12 @@
     daemon_reload: yes
     state: restarted
     enabled: yes
-  when: (registry_result is changed or force_install) and inventory_hostname in groups[worker_group]
+  when: (registry_result is changed) and inventory_hostname in groups[worker_group]
 
 - name: Label node
   community.kubernetes.k8s:
     state: present
+    context: "{{ cluster_name }}"
     definition:
       apiversion: v1
       kind: Node
@@ -62,4 +66,5 @@
         labels:
           node.kubernetes.io/storage: "{{ storage | default(omit) }}"
           node.kubernetes.io/specs: "{{ specs | default(omit) }}"
+          node.kubernetes.io/master: "{{ schedule | default(omit) }}"
   delegate_to: localhost

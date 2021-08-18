@@ -2,12 +2,10 @@
 master_group: masters
 worker_group: workers
 
-force_install: false
-
-k8s_cluster_name: myk3s
+cluster_name: myk3s
 k8s_lb: 192.168.102.100
 
-k3s_version: v1.19.12+k3s1
+k3s_version: v1.21.3+k3s1
 
 # aliyuncs required, change username and password
 aliyuncs:
