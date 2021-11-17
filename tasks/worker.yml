@@ -1,6 +1,6 @@
 ---
 - name: Check worker node exists
-  shell: kubectl get node | grep "^{{ inventory_hostname }}"
+  shell: kubectl get node | grep "^{{ inventory_hostname }}" | grep "{{ k3s_version }}"
   register: check_result
   failed_when: false
   changed_when: false
