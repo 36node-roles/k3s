@@ -7,6 +7,8 @@ k8s_lb: 192.168.102.100
 
 k3s_version: v1.21.3+k3s1
 
+custom_lb: "no"
+
 # aliyuncs required, change username and password
 aliyuncs:
   username: walle@36node

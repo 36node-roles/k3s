@@ -1,4 +1,14 @@
 ---
+- name: Setup rc.local
+  template:
+    src: rc.local.j2
+    dest: /etc/rc.local
+    force: no
+    mode: "u+rwx"
+  notify: Restart rc-local
+  when: custom_lb == "yes"
+
+
 - name: Set net.ipv4.ip_forward=1
   become: yes
   ansible.posix.sysctl:
