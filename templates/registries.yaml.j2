@@ -15,6 +15,11 @@ mirrors:
   "registry.ap-southeast-1.aliyuncs.com":
     endpoint:
       - "https://registry.ap-southeast-1.aliyuncs.com"
+{% if registries_private | bool %}
+  "{{ registries_private_info.url }}":
+    endpoint:
+      - "{{ registries_private_info.ep }}"
+{% endif %}
 configs:
   "registry.cn-beijing.aliyuncs.com":
     auth:
@@ -32,3 +37,11 @@ configs:
     auth:
       username: "{{ aliyuncs.username }}"
       password: "{{ aliyuncs.password }}"
+{% if registries_private | bool %}
+  "{{ registries_private_info.url }}":
+    auth:
+      username: "{{ registries_private_info.username }}"
+      password: "{{ registries_private_info.password }}"
+    tls:
+      insecure_skip_verify: {{ registries_private_info.insecure | bool | lower }}
+{% endif %}

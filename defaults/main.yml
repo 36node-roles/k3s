@@ -14,3 +14,11 @@ aliyuncs:
   username: walle@36node
   password: aaaa
   mirror: https://zh0vhvl1.mirror.aliyuncs.com
+
+registries_private: false
+registries_private_info:
+  username:
+  password:
+  url:
+  ep:
+  insecure_skip_verify:
