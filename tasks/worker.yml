@@ -4,7 +4,7 @@
   register: check_result
   failed_when: false
   changed_when: false
-  delegate_to: localhost
+  delegate_to: "{{ delegate_node }}"
 
 - name: Setup worker node
   command: k3sup join \
@@ -14,5 +14,5 @@
     --ssh-key {{ ansible_ssh_private_key_file }} \
     --user "{{ ansible_user }}"
   register: worker_created
-  delegate_to: localhost
+  delegate_to: "{{ delegate_node }}"
   when: check_result.rc == 1

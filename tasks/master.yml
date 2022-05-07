@@ -23,7 +23,7 @@
     path: ~/.kube
     state: directory
   when: inventory_hostname == groups[master_group][0]
-  delegate_to: localhost
+  delegate_to: "{{ delegate_node }}"
 
 ## 更新这部分检查是否需要更新 config
 
@@ -33,7 +33,7 @@
     - shell: kubectl config unset contexts.{{ cluster_name }}
     - shell: kubectl config unset clusters.{{ cluster_name }}
   when: inventory_hostname == groups[master_group][0]
-  delegate_to: localhost
+  delegate_to: "{{ delegate_node }}"
 
 - name: Setup first master
   command: k3sup install \
@@ -46,7 +46,7 @@
     --ssh-key {{ ansible_ssh_private_key_file }} \
     --cluster
   when: inventory_hostname == groups[master_group][0]
-  delegate_to: localhost
+  delegate_to: "{{ delegate_node }}"
 
 - name: Setup other masters
   throttle: 1
@@ -60,7 +60,7 @@
     --ssh-key {{ ansible_ssh_private_key_file }} \
     --server
   when: inventory_hostname != groups[master_group][0]
-  delegate_to: localhost
+  delegate_to: "{{ delegate_node }}"
 
 - name: Check API availability of master
   uri:
@@ -72,4 +72,4 @@
   retries: 6
   delay: 15
   until: k8s_api_result is not failed
-  delegate_to: localhost
+  delegate_to: "{{ delegate_node }}"

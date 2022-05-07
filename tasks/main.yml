@@ -67,4 +67,4 @@
           node.kubernetes.io/storage: "{{ storage | default(omit) }}"
           node.kubernetes.io/specs: "{{ specs | default(omit) }}"
           node.kubernetes.io/master: "{{ schedule | default(omit) }}"
-  delegate_to: localhost
+  delegate_to: "{{ delegate_node }}"
