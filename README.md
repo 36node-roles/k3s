@@ -49,7 +49,7 @@ spec:
 
 To exclude nodes from using the Service LB, add the following label to the nodes that should not be excluded:
 
-```
+```sh
 svccontroller.k3s.cattle.io/enablelb
 ```
 
@@ -59,7 +59,7 @@ k3s 启动的时候，可以用 --label-nodes 去关闭或者开启节点的 lb 
 
 ## private registry
 
-https://rancher.com/docs/k3s/latest/en/installation/private-registry/
+<https://rancher.com/docs/k3s/latest/en/installation/private-registry/>
 
 ## k8s 相关命令
 
@@ -72,37 +72,43 @@ https://rancher.com/docs/k3s/latest/en/installation/private-registry/
 
 查看 k8s 资源版本
 
-```
+```sh
 kubectl explain cronjob
 ```
 
 查看所有 api version
-```
+
+```sh
 kubectl api-resources
 ```
 
 污点
-```
+
+```sh
 kubectl taint nodes master-11 node-role.kubernetes.io/master:NoSchedule
 ```
 
 查看 node labels
-```
+
+```sh
 kubectl get nodes --show-labels
 ```
 
-# 查看某一node上的所有pods
+## 查看某一node上的所有pods
+
+```sh
 kubectl get pods --all-namespaces -o wide --field-selector spec.nodeName=master-11
+```
 
 ## 错误解决
 
 1. invalid capacity 0 on image filesystem
 
-https://github.com/ubuntu/microk8s/issues/401#issuecomment-480945986
+[参考链接](https://github.com/ubuntu/microk8s/issues/401#issuecomment-480945986)
 
 ## 重新创建 kubeconfig
 
-```
+```sh
 k3sup install --skip-install \
     --ip "{{ k8s_lb }}" \
     --user "{{ ansible_user }}" \
@@ -117,7 +123,7 @@ k3sup install --skip-install \
 
 Link to local installed role for convenience.
 
-```
+```sh
 rm -rf /Users/zzs/.ansible/roles/36node.k3s
 ln -s $PWD /Users/zzs/.ansible/roles/36node.k3s
 ```
