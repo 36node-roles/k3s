@@ -3,6 +3,7 @@ master_group: masters
 worker_group: workers
 
 cluster_name: myk3s
+cluster_domain: "{{ cluster_name }}.36node.com"
 k8s_lb: 192.168.102.100
 
 k3s_version: v1.21.3+k3s1
